@@ -13,8 +13,8 @@ on:
   workflow_dispatch:
 
 env:
-  DEMO_HOME: /home/runner/work/demo-repo4/demo-repo4/
-  PYTHONPATH: /home/runner/work/demo-repo4/demo-repo4/
+  DEMO_HOME: /home/runner/work/class-demo/class-demo/
+  PYTHONPATH: /home/runner/work/class-demo/class-demo/
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
