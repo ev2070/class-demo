@@ -2,7 +2,6 @@
 games.py: the interface to our game data.
 """
 
-games = {}
 NUM_PLAYERS = 'numPlayers'
 TEST_GAME_NAME = 'Wizards Galore'
 
