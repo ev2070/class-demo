@@ -6,6 +6,7 @@ The endpoint called `endpoints` will return all available endpoints.
 from flask import Flask
 from flask_restx import Resource, Api
 
+import data.games as gms
 import data.users as users
 
 app = Flask(__name__)
@@ -17,6 +18,9 @@ MAIN_MENU_EP = '/MainMenu'
 MAIN_MENU_NM = "Welcome to Text Game!"
 HELLO_EP = '/hello'
 HELLO_RESP = 'hello'
+GAMES_EP = '/games'
+GAME_MENU_EP = '/game_menu'
+GAME_MENU_NM = 'Game Menu'
 # USERS = 'users'
 USERS_EP = '/users'
 USER_MENU_EP = '/user_menu'
@@ -56,7 +60,6 @@ class Endpoints(Resource):
 
 
 @api.route(f'{MAIN_MENU_EP}')
-# @api.route('/')
 class MainMenu(Resource):
     """
     This will deliver our main menu.
@@ -78,10 +81,35 @@ class MainMenu(Resource):
                 }}
 
 
+@api.route(f'{USER_MENU_EP}')
+class UserMenu(Resource):
+    """
+    This will deliver our user menu.
+    """
+    def get(self):
+        """
+        Gets the user menu.
+        """
+        return {
+                   TITLE: USER_MENU_NM,
+                   DEFAULT: '0',
+                   'Choices': {
+                       '1': {
+                            'url': '/',
+                            'method': 'get',
+                            'text': 'Get User Details',
+                       },
+                       '0': {
+                            'text': 'Return',
+                       },
+                   },
+               }
+
+
 @api.route(f'{USERS_EP}')
 class Users(Resource):
     """
-    This class supports fetching a list of all pets.
+    This class supports fetching a list of all users.
     """
     def get(self):
         """
@@ -89,8 +117,26 @@ class Users(Resource):
         """
         return {
             TYPE: DATA,
-            TITLE: 'Current Users',
+            TITLE: 'Current Games',
             DATA: users.get_users(),
             MENU: USER_MENU_EP,
+            RETURN: MAIN_MENU_EP,
+        }
+
+
+@api.route(f'{GAMES_EP}')
+class Games(Resource):
+    """
+    This class supports fetching a list of all games.
+    """
+    def get(self):
+        """
+        This method returns all games.
+        """
+        return {
+            TYPE: DATA,
+            TITLE: 'Current Games',
+            DATA: gms.get_games(),
+            MENU: GAME_MENU_EP,
             RETURN: MAIN_MENU_EP,
         }
